@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>工程QRの使い方</title>
+<style>
+:root { --bg:#f4f5f2; --card:#fff; --fg:#1b2420; --muted:#5f6d66; --line:#d6dcd7;
+  --run:#0b6b4f; --run-soft:#e2f2ea; --pause:#9a5a00; --pause-soft:#fdf0dc; --done:#374a42; --err:#a32020; --err-soft:#fbe6e6; }
+@media (prefers-color-scheme: dark) { :root { --bg:#121815; --card:#1b231f; --fg:#e5ece7; --muted:#9aaaa2; --line:#313d37;
+  --run:#4cc597; --run-soft:#1b3a2e; --pause:#f0b060; --pause-soft:#3a2c16; --done:#a9bdb4; --err:#ff8f8f; --err-soft:#3d1c1c; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.75 "Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif; }
+main { max-width:560px; margin:0 auto; padding:18px 16px 48px; display:flex; flex-direction:column; gap:14px; }
+h1 { font-size:24px; margin:4px 0 0; }
+h2 { font-size:18px; margin:0 0 6px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+ol, ul { margin:0; padding-left:1.3em; display:flex; flex-direction:column; gap:6px; }
+.btns { display:grid; grid-template-columns:auto 1fr; gap:10px 12px; align-items:center; }
+.b { min-width:76px; text-align:center; font-weight:700; border-radius:8px; padding:6px 10px; color:#fff; }
+.b.start { background:var(--run); } .b.pause { background:var(--pause); } .b.done { background:var(--done); }
+@media (prefers-color-scheme: dark) { .b { color:#0d1411; } }
+.note { background:var(--pause-soft); border-left:4px solid var(--pause); }
+.small { font-size:14px; color:var(--muted); }
+b.k { color:var(--run); }
+</style>
+</head>
+<body>
+<main>
+  <h1>工程QRの使い方</h1>
+
+  <section class="card">
+    <h2>1. 開く</h2>
+    <ol>
+      <li>工程QRのトークを開き、下のメニューの<b class="k">「工程QR」</b>を押します。</li>
+      <li>カメラが開くので、指図書（またはQCシート）のQRを読みます。</li>
+      <li>その指図書の工程が上から順に並びます。</li>
+    </ol>
+    <p class="small">カメラが開かないときは、指図書番号（例 K829）を入れて「開く」を押してください。</p>
+  </section>
+
+  <section class="card">
+    <h2>2. ボタンを押す</h2>
+    <div class="btns">
+      <span class="b start">開始</span><span>自分の工程を始めるとき</span>
+      <span class="b pause">中断</span><span>手を止めるとき（ほかの作業・休憩など）</span>
+      <span class="b start">再開</span><span>中断した工程に戻るとき</span>
+      <span class="b done">完了</span><span>工程が終わったとき。<b>2回押す</b>と記録されます</span>
+    </div>
+    <p class="small">押した人の名前と時刻が自動で記録されます。名前を入れる必要はありません。</p>
+  </section>
+
+  <section class="card">
+    <h2>3. 自動で止まる時間</h2>
+    <ul>
+      <li><b>12:00〜12:50</b>（昼休み）は、作業中のままでも時間に入りません。12:50から自動で数え直します。</li>
+      <li><b>17:30</b>に、作業中のままの工程は自動で中断になります。</li>
+      <li>残業で17:30以降に始めた工程は、<b>21:00</b>に自動で中断になります。</li>
+    </ul>
+    <p class="small">次の日に続きをするときは「再開」を押してください。</p>
+  </section>
+
+  <section class="card note">
+    <h2>押し間違えたとき</h2>
+    <p style="margin:0">スマホからは取り消せません。<b>事務所に伝えてください。</b>事務所のkintoneで直します。</p>
+  </section>
+
+  <section class="card">
+    <h2>こんな表示が出たら</h2>
+    <ul>
+      <li><b>この指図書はまだ登録されていません</b> … 事務所の登録がまだです。事務所に確認してください。</li>
+      <li><b>工程がまだ決まっていません</b> … 製造部長に確認してください。</li>
+      <li><b>ほかの人が押した可能性があります</b> … 画面が最新の状態に変わります。もう一度確認して押してください。</li>
+      <li><b>認証が切れました</b> … 画面を×で閉じて、メニューから開き直してください。</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
