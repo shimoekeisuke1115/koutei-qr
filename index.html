@@ -134,6 +134,11 @@ function say(text, kind) {
 woff.init({ woffId: WOFF_ID }).then(function () {
   if (!woff.isInClient() && !woff.isLoggedIn()) { woff.login(); return; }
   token = woff.getAccessToken();
+  // カメラを向けている間に、中継を起こして本人確認を済ませておく（結果は待たない）
+  call({ action: 'ping' }).then(function (res) {
+    if (res && res.ok && res.me) meName = res.me;
+    if (res && res.now) clockOffset = res.now - Date.now();
+  });
   return woff.getProfile().then(function (p) {
     $('me').textContent = (p && p.displayName ? p.displayName : '') + ' さん';
   }).catch(function () { $('me').textContent = ''; }).then(function () {
@@ -184,7 +189,8 @@ function call(body) {
 
 function find(target) {
   setBusy(true);
-  say('読み込み中…', 'info');
+  say((target.ktgNo ? target.ktgNo + ' を' : '') + '読み込み中…', 'info');
+  var t0 = Date.now();
   var body = { action: 'find' };
   if (target.ktgNo) body.ktgNo = target.ktgNo; else body.ktgId = target.ktgId;
   call(body).then(function (res) {
@@ -194,6 +200,7 @@ function find(target) {
     if (!rec.fixed) say('工程がまだ決まっていません。製造部長に確認してください', 'err');
     else if (rec.allDone) say('この指図書は完了しています', 'info');
     else say('');
+    $('clock').textContent = new Date().toTimeString().slice(0, 5) + '（' + ((Date.now() - t0) / 1000).toFixed(1) + '秒）';
   });
 }
 
